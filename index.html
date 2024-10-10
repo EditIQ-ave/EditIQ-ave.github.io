@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="grid-style.css" />
   </head>
   <body>
+    <div id="loading-screen">
+      <h1 class="loading-text">Loading<span id="dots"></span></h1>
+    </div>
+
     <h1>
       EditIQ: Automated Cinematic Editing of Static Wide-Angle Videos via
       Dialogue Interpretation and Saliency Cues
@@ -195,7 +199,7 @@
           <div class="header-item">Original</div>
           <video width="400" controls>
             <source
-              src="./videos/segment_11/segment_11_original.mp4"
+              src="./videos/segment_11/segment_11_original_fullhd.mp4"
               type="video/mp4"
             />
             Your browser does not support the video tag.
@@ -373,7 +377,7 @@
           <div class="header-item">Original</div>
           <video width="400" controls>
             <source
-              src="./videos/segment_15/segment_15_original.mp4"
+              src="./videos/segment_15/segment_15_original_fullhd.mp4"
               type="video/mp4"
             />
             Your browser does not support the video tag.
@@ -457,5 +461,19 @@
     <div class="footer">
       <p style="text-align: center">&copy; 2024 | EditIQ Team</p>
     </div>
+
+    <script>
+      window.addEventListener("load", function () {
+        document.getElementById("loading-screen").style.display = "none";
+      });
+
+      let dotCount = 0;
+      const dotsElement = document.getElementById("dots");
+
+      setInterval(() => {
+        dotCount = (dotCount + 1) % 4; // Cycle between 0 and 3
+        dotsElement.innerHTML = ".".repeat(dotCount);
+      }, 500); // Change dots every 500ms
+    </script>
   </body>
 </html>
