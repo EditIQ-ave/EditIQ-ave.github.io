@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EditIQ: Automated Cinematic Editing</title>
+    <link rel="icon" href="./images/video-editing.png" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="grid-style.css" />
+  </head>
+  <body>
+    <h1>
+      EditIQ: Automated Cinematic Editing of Static Wide-Angle Videos via
+      Dialogue Interpretation and Saliency Cues
+    </h1>
+
+    <!-- <div class="teaser-frame">
+      <img
+        src="./images/Teaser3X.png"
+        alt="EditIQ Pipeline"
+        style="width: 100%; height: 100%; object-fit: contain"
+      />
+    </div>
+
+    <p class="caption">
+      We present <i>EditIQ</i>, an automated video editing pipeline based on
+      dialogue understanding using LLMs and visual understanding via video
+      saliency. First row presents original video frames input to the pipeline,
+      which generates multiple <i>rushes</i> (depicted in the next two rows).
+      The speaker is denoted by a green arrow in original frame, and the
+      transcript below 3rd row. LLMs are employed to analyze the scene's
+      narrative, guiding shot selections (highlighted in red on the left for
+      each frame in 4th row). Simultaneously, saliency analysis captures
+      prominent visual scene content, giving alternate shot selections (shown in
+      blue on 4th row right for each frame). Combining the language and
+      visual-based scene understanding results generates optical video shots
+      captured in the 5th row.
+    </p> -->
+
+    <h2 style="text-align: center">Demo Video</h2>
+    <div class="video-frame">
+      <iframe
+        width="100%"
+        height="100%"
+        title="EditIQ Demo Video"
+        src="https://www.youtube-nocookie.com/embed/VyF7ygKfb6U?si=VH-GJ7DOSdVZk9BK?mode=opaque&amp;rel=0&amp;autohide=1&amp;wmode=transparent"
+        frameborder="0"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allow="accelerometer; gyroscope; picture-in-picture; encrypted-media"
+        allowfullscreen
+      ></iframe>
+      <!-- <video controls>
+        <source src="./The39Steps_7/The39Steps_7_BoTSORT.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video> -->
+    </div>
+
+    <h2>Abstract</h2>
+    <p>
+      We present <i>EditIQ</i>, a completely automated framework for
+      cinematically editing scenes captured via a stationary, large
+      field-of-view and high-resolution camera. From the static camera feed,
+      <i>EditIQ</i> initially generates multiple virtual feeds, emulating a team
+      of cameramen. These virtual camera shots termed <i>rushes</i> are
+      subsequently assembled using an automated editing algorithm, whose
+      objective is to present the viewer with the most vivid scene content. To
+      understand key scene elements and guide the editing process, we employ a
+      two-pronged approach: (1) a large language model (LLM)-based dialogue
+      understanding module to analyze conversational flow, coupled with (2)
+      visual saliency prediction to identify meaningful scene elements and
+      camera shots therefrom. We then formulate cinematic video editing as an
+      energy minimization problem over shot selection, where cinematic
+      constraints determine shot choices, transitions, and continuity.
+      <i>EditIQ</i> synthesizes an aesthetically and visually compelling
+      representation of the original narrative while maintaining cinematic
+      coherence and a smooth viewing experience. Efficacy of
+      <i>EditIQ</i> against competing baselines is demonstrated via a
+      psychophysical study involving twenty participants on the
+      <i>BBC Old School</i> dataset plus eleven theatre performance videos.
+    </p>
+
+    <!-- <h2>Fully Automated EditIQ Pipeline</h2>
+
+    <div class="pipeline-frame">
+      <img
+        src="./images/Pipeline_new.png"
+        alt="EditIQ Pipeline"
+        style="width: 100%; height: 100%; object-fit: contain"
+      />
+    </div> -->
+
+    <center>
+      <h2>More Video Results</h2>
+    </center>
+
+    <div class="divider">
+      <h3>Demo Video 1</h3>
+    </div>
+
+    <!-- Put one video in the center -->
+
+    <div class="original">
+      <div class="grid-row">
+        <div></div>
+        <div class="grid-item">
+          <div class="header-item">Original</div>
+          <video width="400" controls>
+            <source
+              src="./videos/The39Steps_4/The39Steps_4_original.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="grid-row">
+        <div class="grid-item">
+          <div class="header-item">Speaker</div>
+          <video width="400" controls>
+            <source
+              src="./videos/The39Steps_4/The39Steps_4_1.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="grid-item">
+          <div class="header-item">Random</div>
+          <video width="400" controls>
+            <source
+              src="./videos/The39Steps_4/The39Steps_4_2.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="grid-item">
+          <div class="header-item">Wide</div>
+          <video width="400" controls>
+            <source
+              src="./videos/The39Steps_4/The39Steps_4_3.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="grid-row">
+        <div class="grid-item">
+          <div class="header-item">LLM</div>
+          <video width="400" controls>
+            <source
+              src="./videos/The39Steps_4/The39Steps_4_4.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="grid-item">
+          <div class="header-item">Saliency</div>
+          <video width="400" controls>
+            <source
+              src="./videos/The39Steps_4/The39Steps_4_5.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="grid-item">
+          <div class="header-item">EditIQ</div>
+          <video width="400" controls>
+            <source
+              src="./videos/The39Steps_4/The39Steps_4_6.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider">
+      <h3>Demo Video 2</h3>
+    </div>
+
+    <div class="original">
+      <div class="grid-row">
+        <div></div>
+        <div class="grid-item">
+          <div class="header-item">Original</div>
+          <video width="400" controls>
+            <source
+              src="./videos/segment_11/segment_11_original.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="grid-row">
+        <div class="grid-item">
+          <div class="header-item">Speaker</div>
+          <video width="400" controls>
+            <source
+              src="./videos/segment_11/segment_11_1.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="grid-item">
+          <div class="header-item">Random</div>
+          <video width="400" controls>
+            <source
+              src="./videos/segment_11/segment_11_2.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="grid-item">
+          <div class="header-item">Wide</div>
+          <video width="400" controls>
+            <source
+              src="./videos/segment_11/segment_11_3.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="grid-row">
+        <div class="grid-item">
+          <div class="header-item">LLM</div>
+          <video width="400" controls>
+            <source
+              src="./videos/segment_11/segment_11_4.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="grid-item">
+          <div class="header-item">Saliency</div>
+          <video width="400" controls>
+            <source
+              src="./videos/segment_11/segment_11_5.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="grid-item">
+          <div class="header-item">EditIQ</div>
+          <video width="400" controls>
+            <source
+              src="./videos/segment_11/segment_11_6.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider">
+      <h3>Demo Video 3</h3>
+    </div>
+
+    <div class="original">
+      <div class="grid-row">
+        <div></div>
+        <div class="grid-item">
+          <div class="header-item">Original</div>
+          <video width="400" controls>
+            <source
+              src="./videos/AllMySons_2/AllMySons_2_original.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="grid-row">
+        <div class="grid-item">
+          <div class="header-item">Speaker</div>
+          <video width="400" controls>
+            <source
+              src="./videos/AllMySons_2/AllMySons_2_1.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="grid-item">
+          <div class="header-item">Random</div>
+          <video width="400" controls>
+            <source
+              src="./videos/AllMySons_2/AllMySons_2_2.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="grid-item">
+          <div class="header-item">Wide</div>
+          <video width="400" controls>
+            <source
+              src="./videos/AllMySons_2/AllMySons_2_3.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="grid-row">
+        <div class="grid-item">
+          <div class="header-item">LLM</div>
+          <video width="400" controls>
+            <source
+              src="./videos/AllMySons_2/AllMySons_2_4.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="grid-item">
+          <div class="header-item">Saliency</div>
+          <video width="400" controls>
+            <source
+              src="./videos/AllMySons_2/AllMySons_2_5.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="grid-item">
+          <div class="header-item">EditIQ</div>
+          <video width="400" controls>
+            <source
+              src="./videos/AllMySons_2/AllMySons_2_6.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider">
+      <h3>Demo Video 4</h3>
+    </div>
+
+    <div class="original">
+      <div class="grid-row">
+        <div></div>
+        <div class="grid-item">
+          <div class="header-item">Original</div>
+          <video width="400" controls>
+            <source
+              src="./videos/segment_15/segment_15_original.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="grid-row">
+        <div class="grid-item">
+          <div class="header-item">Speaker</div>
+          <video width="400" controls>
+            <source
+              src="./videos/segment_15/segment_15_speaker.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="grid-item">
+          <div class="header-item">Random</div>
+          <video width="400" controls>
+            <source
+              src="./videos/segment_15/segment_15_random.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="grid-item">
+          <div class="header-item">Wide</div>
+          <video width="400" controls>
+            <source
+              src="./videos/segment_15/segment_15_wide.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="grid-row">
+        <div class="grid-item">
+          <div class="header-item">LLM</div>
+          <video width="400" controls>
+            <source
+              src="./videos/segment_15/segment_15_llm.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="grid-item">
+          <div class="header-item">Saliency</div>
+          <video width="400" controls>
+            <source
+              src="./videos/segment_15/segment_15_saliency.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="grid-item">
+          <div class="header-item">EditIQ</div>
+          <video width="400" controls>
+            <source
+              src="./videos/segment_15/segment_15_llm_saliency_speaker.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 80px"></div>
+    <!-- Add some space -->
+
+    <div class="footer">
+      <p style="text-align: center">&copy; 2024 | EditIQ Team</p>
+    </div>
+  </body>
+</html>
