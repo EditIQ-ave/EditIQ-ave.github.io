@@ -35,6 +35,23 @@ p {
   text-align: justify;
 }
 
+.authors {
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.author-block a {
+  /* text color as hsl(204, 86%, 53%) */
+  color: hsl(204, 86%, 53%);
+}
+
+.important-links {
+  /* Center the elements */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
 .divider {
   display: flex;
   align-items: center;
